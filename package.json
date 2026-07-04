@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "ingex",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  },
+  "packageManager": "bun"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@ingex/mongoose",
+  "version": "0.1.0",
+  "description": "Official Mongoose storage connector for Ingex",
+  "author": "Rudr",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ingex.git",
+    "directory": "packages/mongoose"
+  },
+  "main": "./index.ts",
+  "module": "./index.ts",
+  "type": "module",
+  "files": [
+    "index.ts"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "@ingex/core": "^1.0.0",
+    "typescript": "^5",
+    "mongoose": "^9.7.3"
+  }
+}
