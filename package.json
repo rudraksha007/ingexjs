@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "ingex",
+  "name": "ingexjs",
   "type": "module",
   "workspaces": [
     "packages/*"
@@ -8,6 +8,5 @@
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "^5"
-  },
-  "packageManager": "bun"
+  }
 }

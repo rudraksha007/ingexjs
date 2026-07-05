@@ -11,6 +11,7 @@
     },
     "packages/core": {
       "name": "@ingex/core",
+      "version": "0.1.1-alpha.0",
       "dependencies": {
         "crawlee": "^3.17.0",
         "playwright": "^1.61.1",
@@ -24,12 +25,13 @@
     },
     "packages/mongoose": {
       "name": "@ingex/mongoose",
+      "version": "0.1.1-alpha.0",
       "devDependencies": {
         "@types/bun": "latest",
       },
       "peerDependencies": {
-        "@ingex/core": "workspace:*",
-        "mongoose": "^9.7.3",
+        "@ingex/core": "workspace:^",
+        "mongoose": "^8.24.1",
         "typescript": "^5",
       },
     },
