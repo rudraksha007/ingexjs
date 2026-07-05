@@ -15,7 +15,7 @@ const DataSchema = new Schema<Data>({
 
 DataSchema.index({ url: 1 }, { unique: true });
 
-export const DataModel = model<Data>("RawData", DataSchema);
+export const DataModel = model<Data>("CrawledData", DataSchema);
 
 export function getMongooseConnector(url: string, opts?: ConnectOptions): StorageConnector<any> {
 
@@ -43,16 +43,42 @@ export function getMongooseConnector(url: string, opts?: ConnectOptions): Storag
         return updateDoc;
     };
 
-    return {
-        init: async () => { await connect(url, opts); logger.info("Connected to MongoDB") },
+    const connector = {
+        isInit: false,
+        async init() {
+            if (this.isInit) return;
+            await connect(url, opts);
+            logger.info("Connected to MongoDB");
+            this.isInit = true;
+        },
         insert: async (stage: string, item: any) => {
-            const doc = new DataModel(extractDoc(stage, item));
-            await doc.save();
-            return doc._id.toString();
+            try {
+                const doc = new DataModel(extractDoc(stage, item));
+                await doc.save();
+                return doc._id.toString();
+            } catch (err: any) {
+                if (err.code === 11000 || err.message?.includes("duplicate key")) return "";
+                throw err;
+            }
         },
         insertMany: async (stage: string, items: any[]) => {
-            const docs = await DataModel.insertMany(items.map(item => extractDoc(stage, item)));
-            return docs.map((doc: any) => doc._id.toString());
+            if (items.length === 0) return [];
+            try {
+                const ops = items.map(item => ({
+                    updateOne: {
+                        filter: { url: item.url },
+                        update: { $set: extractDoc(stage, item) },
+                        upsert: true
+                    }
+                }));
+                await DataModel.bulkWrite(ops, { ordered: false });
+                return items.map((item: any) => item.url);
+            } catch (err: any) {
+                if (err.code === 11000 || err.message?.includes("11000") || err.message?.includes("duplicate key")) {
+                    return [];
+                }
+                throw err;
+            }
         },
         delete: async (stage: string, id: string) => {
             await DataModel.findOneAndDelete({ _id: id, stage });
@@ -70,7 +96,7 @@ export function getMongooseConnector(url: string, opts?: ConnectOptions): Storag
             await DataModel.findOneAndUpdate({ _id: id, stage }, { $set: extractUpdateDoc(item) });
         },
         updateMany: async (stage: string, ids: string[], items: any[]) => {
-            await Promise.all(ids.map((id, i) => 
+            await Promise.all(ids.map((id, i) =>
                 DataModel.findOneAndUpdate({ _id: id, stage }, { $set: extractUpdateDoc(items[i]) })
             ));
         },
@@ -80,5 +106,6 @@ export function getMongooseConnector(url: string, opts?: ConnectOptions): Storag
         getBatch: async (stage: string, limit: number, skip: number = 0) => {
             return await DataModel.find({ stage }).skip(skip).limit(limit).lean();
         }
-    }
+    };
+    return connector;
 }

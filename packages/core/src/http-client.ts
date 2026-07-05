@@ -4,7 +4,14 @@ import { Readable } from "stream"
 import type { ReadableStream } from "stream/web";
 
 
+/**
+ * Custom HTTP client for the Ingestor using native fetch.
+ * Implements the BaseHttpClient interface from Crawlee to integrate with its crawling features.
+ */
 export const IngexHttpClient: BaseHttpClient = {
+    /**
+     * Sends a standard HTTP request and returns the parsed response.
+     */
     async sendRequest<T extends keyof ResponseTypes = 'text'>(
         request: HttpRequest<T>,
     ): Promise<HttpResponse<T>> {
@@ -40,6 +47,9 @@ export const IngexHttpClient: BaseHttpClient = {
         } as HttpResponse<T>;
     },
 
+    /**
+     * Sends an HTTP request and returns a streaming response.
+     */
     async stream(
         request: HttpRequest,
     ): Promise<StreamingHttpResponse> {

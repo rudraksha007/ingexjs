@@ -1,9 +1,19 @@
 import type { WorkerMessage, WorkerResponseMessage } from "./types";
 
+/**
+ * Global self reference for the web worker context.
+ */
 declare var self: any;
 
+/**
+ * Stores the currently loaded module's default export function to handle jobs.
+ */
 let jobHandler: ((data: any) => any | Promise<any>) | undefined = undefined;
 
+/**
+ * Main message event listener for the worker.
+ * Handles INIT messages to load modules and JOB messages to execute tasks.
+ */
 self.onmessage = async (event: any) => {
     const msg = event.data as WorkerMessage;
 
