@@ -19,7 +19,7 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "@ingex/core": "workspace:^",
+    "@ingexjs/core": "workspace:^",
     "typescript": "^5",
     "mongoose": "^8.24.1"
   }
