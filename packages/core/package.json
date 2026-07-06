@@ -1,6 +1,6 @@
 {
   "name": "@ingexjs/core",
-  "version": "0.1.1-alpha.0",
+  "version": "0.1.2",
   "description": "Core engine of Ingex for multi-stage web scraping and data pipelines",
   "author": "Rudr",
   "license": "MIT",

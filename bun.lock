@@ -25,12 +25,12 @@
     },
     "packages/mongoose": {
       "name": "@ingexjs/mongoose",
-      "version": "0.1.1-alpha.0",
+      "version": "0.1.2",
       "devDependencies": {
         "@types/bun": "latest",
       },
       "peerDependencies": {
-        "@ingexjs/core": "workspace:^",
+        "@ingexjs/core": ">=0.1.1",
         "mongoose": "^8.24.1",
         "typescript": "^5",
       },

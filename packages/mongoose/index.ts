@@ -1,4 +1,4 @@
-import { type Data, type StorageConnector } from "@ingex/core";
+import { type Data, type StorageConnector } from "@ingexjs/core";
 import { Schema, connect, model, type ConnectOptions } from "mongoose";
 import { logger } from "../core/src/logger";
 

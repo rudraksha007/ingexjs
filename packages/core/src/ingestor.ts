@@ -231,7 +231,6 @@ export class Ingestor {
                                     if (msg.data.rejected) {
                                         logger.info(`Item rejected by filter: ${msg.data.reason || "Unknown"}`);
                                         msg.data.stage = 'rejected';
-                                        msg.data.content = "";
                                         rejectedItems.push(msg.data);
                                     } else {
                                         ok.push(msg.data);

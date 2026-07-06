@@ -1,6 +1,6 @@
 {
   "name": "@ingexjs/mongoose",
-  "version": "0.1.1-alpha.0",
+  "version": "0.1.4",
   "description": "Official Mongoose storage connector for Ingex",
   "author": "Rudr",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "@ingexjs/core": "workspace:^",
+    "@ingexjs/core": ">=0.1.1-alpha.0",
     "typescript": "^5",
     "mongoose": "^8.24.1"
   }
